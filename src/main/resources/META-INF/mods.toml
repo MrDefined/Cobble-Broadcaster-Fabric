@@ -17,23 +17,18 @@ authors = "SkyNetCloud" #optional
 description = '''
 A mod that can be use to Broadcast Cobblemon Capture event for Legendarys Ultra Beasts Shinys and Normal All can be toggle on or off
 '''
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.cobblemonbroadcast]] #optional
-# the modid of the dependency
-modId = "forge" #mandatory
-# Does this dependency have to exist - if not, ordering below must be specified
-mandatory = true #mandatory
-# The version range of the dependency
-versionRange = "[43,)" #mandatory
-# An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
-ordering = "NONE"
-# Side this dependency is applied on - BOTH, CLIENT or SERVER
-side = "BOTH"
-# Here's another dependency
 [[dependencies.cobblemonbroadcast]]
-modId = "minecraft"
-mandatory = true
-# This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange = "[1.19.2,1.20)"
-ordering = "NONE"
-side = "BOTH"
+modId = "cobblemon" #mandatory
+mandatory = true #mandatory
+versionRange = "[1.3.0,)" #mandatory
+
+[[dependencies.cobblemonbroadcast]]
+modId="forge" #mandatory
+mandatory=true #mandatory
+versionRange="[40,)" #mandatory
+
+[[dependencies.cobblemonbroadcast]]
+modId="architectury"
+mandatory=true
+versionRange="[6.0.37,)"
+
