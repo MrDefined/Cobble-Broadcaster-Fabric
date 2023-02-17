@@ -8,7 +8,11 @@ issueTrackerURL="https://github.com/SkyNetCloud/Cobbmon-Broadcaster-Forge/issues
 
 modId = "cobblemonbroadcast" #mandatory
 
-version = "${file.jarVersion}" #mandatory
+version = "${version}" #mandatory
+
+updateJSONURL= ""
+
+logoFile="logo.png"
 
 displayName = "cobblemonbroadcastmod" #mandatory
 
