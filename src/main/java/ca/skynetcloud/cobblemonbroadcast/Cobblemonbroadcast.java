@@ -114,7 +114,7 @@ public class Cobblemonbroadcast {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
     {
-        LOGGER.info(MODNAME + " " + MODVERSION + " Loaded" );
+        LOGGER.info(ChatFormatting.RED + MODNAME + " " + ChatFormatting.BLUE + MODVERSION + " Loaded" );
     }
 
 

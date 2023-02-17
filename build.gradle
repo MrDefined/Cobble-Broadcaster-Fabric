@@ -126,12 +126,15 @@ jar {
 
 
 curseforge {
-    apiKey = project() // This should really be in a gradle.properties file
-    project {
-        id = '12345'
-        changelog = 'Changes' // A file can also be set using: changelog = file('changelog.txt')
-        releaseType = 'beta'
+    if (project.hasProperty('curseApiKey')) {
+        apiKey = project() // This should really be in a gradle.properties file
+        project {
+            id = '12345'
+            changelog = 'Changes' // A file can also be set using: changelog = file('changelog.txt')
+            releaseType = 'beta'
+        }
     }
+
 }
 
 
