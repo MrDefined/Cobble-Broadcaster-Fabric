@@ -126,7 +126,7 @@ jar {
 
 
 curseforge {
-    apiKey = '123-456' // This should really be in a gradle.properties file
+    apiKey = project() // This should really be in a gradle.properties file
     project {
         id = '12345'
         changelog = 'Changes' // A file can also be set using: changelog = file('changelog.txt')
