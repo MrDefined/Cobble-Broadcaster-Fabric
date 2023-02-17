@@ -29,7 +29,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -57,9 +59,11 @@ public class Cobblemonbroadcast {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public Cobblemonbroadcast() {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CobbleConfig.CONFIG_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CobbleConfig.CONFIG_SPEC);
         CobblemonEvents.INSTANCE.getPOKEMON_CAPTURED().subscribe(Priority.HIGH, e -> {
 
-            if (e.getPokemon().isLegendary()) {
+            if (e.getPokemon().isLegendary() && CobbleConfig.Config.isLegendaryEnable.get())  {
 
                 MutableComponent comp1 = e.getPlayer().getName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.RED));
                 MutableComponent comp2 = e.getPokemon().getDisplayName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.BLUE));
@@ -70,7 +74,7 @@ public class Cobblemonbroadcast {
 
             }
 
-            if (e.getPokemon().isUltraBeast()) {
+            if (e.getPokemon().isUltraBeast() &&  CobbleConfig.Config.isUltraBeastEnable.get()) {
                 MutableComponent comp1 = e.getPlayer().getName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.RED));
                 MutableComponent comp2 = e.getPokemon().getDisplayName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.BLUE));
                 Component ub = Component.translatable("cobblemonbroadcast.captured.ub", comp1, comp2);
@@ -80,7 +84,7 @@ public class Cobblemonbroadcast {
 
             }
 
-            if (e.getPokemon().getShiny()) {
+            if (e.getPokemon().getShiny() && CobbleConfig.Config.isShinyEnable.get()) {
                 MutableComponent comp1 = e.getPlayer().getName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.RED));
                 MutableComponent comp2 = e.getPokemon().getDisplayName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.BLUE));
                 Component shiny = Component.translatable("cobblemonbroadcast.captured.shiny", comp1, comp2);
@@ -91,7 +95,7 @@ public class Cobblemonbroadcast {
 
             }
 
-            if (!e.getPokemon().isUltraBeast() && !e.getPokemon().getShiny() && !e.getPokemon().isLegendary()) {
+            if (!e.getPokemon().isUltraBeast() && !e.getPokemon().getShiny() && !e.getPokemon().isLegendary() && CobbleConfig.Config.isNormalEnable.get()) {
 
                 MutableComponent comp1 = e.getPlayer().getName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.RED));
                 MutableComponent comp2 = e.getPokemon().getDisplayName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.BLUE));
