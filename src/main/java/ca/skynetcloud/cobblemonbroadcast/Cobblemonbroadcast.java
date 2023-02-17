@@ -59,8 +59,9 @@ public class Cobblemonbroadcast {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public Cobblemonbroadcast() {
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CobbleConfig.CONFIG_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CobbleConfig.CONFIG_SPEC);
+
         CobblemonEvents.INSTANCE.getPOKEMON_CAPTURED().subscribe(Priority.HIGH, e -> {
 
             if (e.getPokemon().isLegendary() && CobbleConfig.Config.isLegendaryEnable.get())  {

@@ -5,7 +5,7 @@ plugins {
 
 
 group = 'ca.skynetcloud'
-version = '0.0.1'
+version = '1.0.19045'
 
 java {
     archivesBaseName = 'Cobblemon-Broadcast'
@@ -127,14 +127,21 @@ jar {
 
 curseforge {
     if (project.hasProperty('curseApiKey')) {
-        apiKey = project() // This should really be in a gradle.properties file
+        apiKey = project.getProperty('curseApiKey')
         project {
-            id = '12345'
-            changelog = 'Changes' // A file can also be set using: changelog = file('changelog.txt')
-            releaseType = 'beta'
+            id = "827760"
+
+            changelog = file("Cobble-Broadcaster-${version}-changelog.txt")
+
+            releaseType = 'release'
+
+            addGameVersion '1.19.2'
+
+            mainArtifact(jar) {
+                displayName = "Cobble Broadcaster ${version}"
+            }
         }
     }
-
 }
 
 

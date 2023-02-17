@@ -8,9 +8,9 @@ issueTrackerURL="https://github.com/SkyNetCloud/Cobbmon-Broadcaster-Forge/issues
 
 modId = "cobblemonbroadcast" #mandatory
 
-version = "${version}" #mandatory
+version = "${file.jarVersion}" #mandatory
 
-updateJSONURL= ""
+updateJSONURL= "https://raw.githubusercontent.com/SkyNetCloud/Cobbmon-Broadcaster-Forge/master/update.json"
 
 logoFile="logo.png"
 
@@ -24,7 +24,7 @@ A mod that can be use to Broadcast Cobblemon Capture event for Legendarys Ultra 
 [[dependencies.cobblemonbroadcast]]
 modId = "cobblemon" #mandatory
 mandatory = true #mandatory
-versionRange = "[1.3.0,)" #mandatory
+versionRange = "[1.2.0,)" #mandatory
 
 [[dependencies.cobblemonbroadcast]]
 modId="forge" #mandatory

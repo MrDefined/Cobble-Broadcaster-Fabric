@@ -26,6 +26,11 @@ public class CobbleConfig {
         CONFIG = specPair.getLeft();
     }
 
+
+    public static void bake() {
+        CobbleConfig.bake();
+    }
+
     public static class Config {
 
         public static BooleanValue isNormalEnable;
@@ -37,12 +42,12 @@ public class CobbleConfig {
 
         public Config(ForgeConfigSpec.Builder builder) {
 
-            builder.push("Broadcast Settins");
-            isLegendaryEnable = builder.comment("for enable or disable the for Legendary Broadcast").translation("islegendaryenabled").define("islegendaryenabled", true);
-            isUltraBeastEnable = builder.comment("for enable or disable the for Ultra Beast Broadcast").translation("isubenabled").define("isubenabled", true);
-            isShinyEnable = builder.comment("for enable or disable the for Shiny Pokemon Broadcast").translation("isshinyenabled").define("isshinyenabled", true);
-            isNormalEnable = builder.comment("for enable or disable of the Normal Pokemon Broadcast").translation("isnormalenabled").define("isnormalenabled", false);
-
+            builder.push("Broadcast Settings");
+            isLegendaryEnable = builder.comment("enabling or disabling Broadcast Message for Legendary Pokemon").translation("islegendaryenabled").define("islegendaryenabled", true);
+            isUltraBeastEnable = builder.comment("enabling or disabling Broadcast Message for Ultra Beast Pokemon").translation("isubenabled").define("isubenabled", true);
+            isShinyEnable = builder.comment("enabling or disabling Broadcast Message for Shiny Pokemon").translation("isshinyenabled").define("isshinyenabled", true);
+            isNormalEnable = builder.comment("enabling or disabling Broadcast Message for Normal Pokemon").translation("isnormalenabled").define("isnormalenabled", false);
+            builder.pop();
         }
 
     }
