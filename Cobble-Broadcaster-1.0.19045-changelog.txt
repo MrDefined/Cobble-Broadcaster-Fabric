@@ -1,3 +1,0 @@
-Sky:
- - Added 4 captured message
- - Added toggleable settings for each message in config file
