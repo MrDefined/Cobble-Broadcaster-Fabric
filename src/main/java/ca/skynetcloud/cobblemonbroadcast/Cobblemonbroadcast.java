@@ -39,7 +39,7 @@ public class Cobblemonbroadcast {
 
     public static final String MODNAME = "Cobblemon-Broadcaster";
 
-    public static final String MODVERSION = "1.2.19045";
+    public static final String MODVERSION = "1.3.19045";
 
     public static final Logger LOGGER = LogUtils.getLogger();
 
@@ -71,7 +71,7 @@ public class Cobblemonbroadcast {
                 Component legend = Component.translatable("cobblemonbroadcast.captured.legend", comp1, comp2);
 
                 if (CobbleConfig.discordHook.get()){
-                    webhook.setAvatarUrl("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + e.getPokemon().getSpecies().getNationalPokedexNumber() + ".png");
+                    webhook.setAvatarUrl("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png");
                     webhook.setUsername(CobbleConfig.webhookName.get());
                     webhook.setTts(false);
                     webhook.addEmbed(new DiscordWebHookSystem.EmbedObject()
@@ -79,7 +79,7 @@ public class Cobblemonbroadcast {
                             .setColor(Color.WHITE)
                             .addField("Captured Pokemon: ", e.getPokemon().getDisplayName().getString(), true)
                             .addField("Ball Used: ", e.getPokemon().getCaughtBall().getName().getPath(), true)
-                            .setThumbnail("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/blob/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png"));
+                            .setThumbnail("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + e.getPokemon().getSpecies().getNationalPokedexNumber() + ".png"));
                     try {
                         webhook.execute();
                     } catch (IOException ex) {
@@ -102,7 +102,7 @@ public class Cobblemonbroadcast {
                 }
 
                 if (CobbleConfig.discordHook.get()) {
-                    webhook.setAvatarUrl("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + e.getPokemon().getSpecies().getNationalPokedexNumber() + ".png");
+                    webhook.setAvatarUrl("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png");
                     webhook.setUsername(CobbleConfig.webhookName.get());
                     webhook.setTts(false);
                     webhook.addEmbed(new DiscordWebHookSystem.EmbedObject()
@@ -110,9 +110,7 @@ public class Cobblemonbroadcast {
                             .setColor(Color.WHITE)
                             .addField("Captured Pokemon: ", e.getPokemon().getDisplayName().getString(), true)
                             .addField("Ball Used: ", e.getPokemon().getCaughtBall().getName().getPath(), true)
-                            .setThumbnail("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/blob/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png"));
-
-
+                            .setThumbnail("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + e.getPokemon().getSpecies().getNationalPokedexNumber() + ".png"));
                     try {
                         webhook.execute();
                     } catch (IOException ex) {
@@ -132,7 +130,7 @@ public class Cobblemonbroadcast {
                 }
 
                 if (CobbleConfig.discordHook.get()) {
-                    webhook.setAvatarUrl("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + e.getPokemon().getSpecies().getNationalPokedexNumber() + ".png");
+                    webhook.setAvatarUrl("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png");
                     webhook.setUsername(CobbleConfig.webhookName.get());
                     webhook.setTts(false);
                     webhook.addEmbed(new DiscordWebHookSystem.EmbedObject()
@@ -140,7 +138,7 @@ public class Cobblemonbroadcast {
                             .setColor(Color.WHITE)
                             .addField("Captured Pokemon: ", e.getPokemon().getDisplayName().getString(), true)
                             .addField("Ball Used: ", e.getPokemon().getCaughtBall().getName().getPath(), true)
-                            .setThumbnail("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/blob/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png"));
+                            .setThumbnail("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + e.getPokemon().getSpecies().getNationalPokedexNumber() + ".png"));
                     try {
                         webhook.execute();
                     } catch (IOException ex) {
@@ -170,7 +168,7 @@ public class Cobblemonbroadcast {
                             .setColor(Color.WHITE)
                             .addField("Captured Pokemon", e.getPokemon().getDisplayName().getString(), true)
                             .addField("Ball Used:", e.getPokemon().getCaughtBall().getName().getPath(), true)
-                            .setThumbnail("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/blob/master/items/ball/"+e.getPokemon().getCaughtBall().getName().toString().trim()+".png"));
+                            .setThumbnail("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+e.getPokemon().getCaughtBall().getName().toString().trim()+".png"));
                     try {
                         webhook.execute();
                     } catch (IOException ex) {
