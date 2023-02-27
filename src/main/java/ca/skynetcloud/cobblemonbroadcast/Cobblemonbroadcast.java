@@ -39,7 +39,7 @@ public class Cobblemonbroadcast {
 
     public static final String MODNAME = "Cobblemon-Broadcaster";
 
-    public static final String MODVERSION = "1.1.19045";
+    public static final String MODVERSION = "1.2.19045";
 
     public static final Logger LOGGER = LogUtils.getLogger();
 
@@ -79,7 +79,7 @@ public class Cobblemonbroadcast {
                             .setColor(Color.WHITE)
                             .addField("Captured Pokemon: ", e.getPokemon().getDisplayName().getString(), true)
                             .addField("Ball Used: ", e.getPokemon().getCaughtBall().getName().getPath(), true)
-                            .setThumbnail("https://github.com/SkyNetCloud/pokesprite/blob/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png"));
+                            .setThumbnail("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/blob/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png"));
                     try {
                         webhook.execute();
                     } catch (IOException ex) {
@@ -110,7 +110,7 @@ public class Cobblemonbroadcast {
                             .setColor(Color.WHITE)
                             .addField("Captured Pokemon: ", e.getPokemon().getDisplayName().getString(), true)
                             .addField("Ball Used: ", e.getPokemon().getCaughtBall().getName().getPath(), true)
-                            .setThumbnail("https://github.com/SkyNetCloud/pokesprite/blob/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png"));
+                            .setThumbnail("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/blob/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png"));
 
 
                     try {
@@ -140,7 +140,7 @@ public class Cobblemonbroadcast {
                             .setColor(Color.WHITE)
                             .addField("Captured Pokemon: ", e.getPokemon().getDisplayName().getString(), true)
                             .addField("Ball Used: ", e.getPokemon().getCaughtBall().getName().getPath(), true)
-                            .setThumbnail("https://github.com/SkyNetCloud/pokesprite/blob/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png"));
+                            .setThumbnail("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/blob/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png"));
                     try {
                         webhook.execute();
                     } catch (IOException ex) {
@@ -170,7 +170,7 @@ public class Cobblemonbroadcast {
                             .setColor(Color.WHITE)
                             .addField("Captured Pokemon", e.getPokemon().getDisplayName().getString(), true)
                             .addField("Ball Used:", e.getPokemon().getCaughtBall().getName().getPath(), true)
-                            .setThumbnail("https://github.com/SkyNetCloud/pokesprite/blob/master/items/ball/"+e.getPokemon().getCaughtBall().getName().toString().trim()+".png"));
+                            .setThumbnail("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/blob/master/items/ball/"+e.getPokemon().getCaughtBall().getName().toString().trim()+".png"));
                     try {
                         webhook.execute();
                     } catch (IOException ex) {
