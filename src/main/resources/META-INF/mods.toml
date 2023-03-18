@@ -36,3 +36,8 @@ modId="architectury"
 mandatory=true
 versionRange="[6.0.37,)"
 
+[[dependencies.cobblemonbroadcast]]
+modId="architectury"
+mandatory=true
+versionRange="[6.0.37,)"
+

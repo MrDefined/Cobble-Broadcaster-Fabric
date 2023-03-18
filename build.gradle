@@ -2,11 +2,15 @@ plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
     id "com.matthewprenger.cursegradle" version "1.4.0"
     id "com.modrinth.minotaur" version "2.+"
+    // Adds the Kotlin Gradle plugin
+    id 'org.jetbrains.kotlin.jvm' version '1.8.0'
+    // OPTIONAL Kotlin Serialization plugin
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.0'
 }
 
 
 group = 'ca.skynetcloud'
-version = '1.3.19045'
+version = '1.4.19045'
 
 java {
     archivesBaseName = 'Cobblemon-Broadcast'
@@ -97,7 +101,10 @@ repositories {
 
     }
     maven { url 'https://jitpack.io' }
-
+    maven {
+        name = 'Kotlin for Forge'
+        url = 'https://thedarkcolour.github.io/KotlinForForge/'
+    }
 
 }
 
@@ -105,7 +112,10 @@ dependencies {
 
     minecraft 'net.minecraftforge:forge:1.19.2-43.2.4'
 
-    compileOnly 'curse.maven:cobblemon-687131:4284573'
+    compileOnly 'curse.maven:cobblemon-687131:4443261'
+
+    // Adds KFF as dependency and Kotlin libs
+    implementation 'thedarkcolour:kotlinforforge:3.10.0'
 
 }
 
@@ -130,7 +140,7 @@ modrinth {
     token = System.getenv("MODRINTH_TOKEN") // This is the default. Remember to have the MODRINTH_TOKEN environment variable set or else this will fail, or set it to whatever you want - just make sure it stays private!
     projectId = project.getProperty('modrinth_id') // This can be the project ID or the slug. Either will work!
 
-    changelog = "Fixed wrong url for ball icon"
+    changelog = rootProject.file("changelog.md").text
 
     versionType = "release" // This is the default -- can also be `beta` or `alpha`
     uploadFile = jar // With Loom, this MUST be set to `remapJar` instead of `jar`!
@@ -159,4 +169,5 @@ curseforge {
     }
 }
 
-
+task siteBuildPublish (type: GradleBuild, dependsOn: ['build', 'modrinth', "curseforge"]) {
+}

@@ -4,6 +4,7 @@ import ca.skynetcloud.cobblemonbroadcast.util.CobbleConfig;
 import ca.skynetcloud.cobblemonbroadcast.util.DiscordWebHookSystem;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
+import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.mojang.logging.LogUtils;
 import kotlin.Unit;
 import net.minecraft.ChatFormatting;
@@ -12,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
+
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -39,7 +41,7 @@ public class Cobblemonbroadcast {
 
     public static final String MODNAME = "Cobblemon-Broadcaster";
 
-    public static final String MODVERSION = "1.3.19045";
+    public static final String MODVERSION = "1.4.19045";
 
     public static final Logger LOGGER = LogUtils.getLogger();
 
@@ -62,20 +64,22 @@ public class Cobblemonbroadcast {
 
     private void CaputerStuff() {
         DiscordWebHookSystem  webhook = new DiscordWebHookSystem("https://discord.com/api/webhooks/" + endCode.get());
-        CobblemonEvents.INSTANCE.getPOKEMON_CAPTURED().subscribe(Priority.NORMAL, e -> {
+        CobblemonEvents.POKEMON_CAPTURED.subscribe(Priority.NORMAL, e -> {
+
+            Pokemon poke = new Pokemon();
 
             if (e.getPokemon().isLegendary() && CobbleConfig.isLegendaryEnable.get() && !e.getPokemon().getShiny())  {
 
-                MutableComponent comp1 = e.getPlayer().getName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.BLUE));
-                MutableComponent comp2 = e.getPokemon().getDisplayName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
-                Component legend = Component.translatable("cobblemonbroadcast.captured.legend", comp1, comp2);
+                MutableComponent comp1 = e.getPlayer().getName().plainCopy();
+                MutableComponent comp2 = e.getPokemon().getDisplayName().plainCopy();
+                Component legend = Component.literal( ChatFormatting.BLUE + comp1.getString() + ChatFormatting.WHITE + CobbleConfig.LegendaryMessage.get() + ChatFormatting.GREEN + comp2.getString());
 
                 if (CobbleConfig.discordHook.get()){
                     webhook.setAvatarUrl("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png");
                     webhook.setUsername(CobbleConfig.webhookName.get());
                     webhook.setTts(false);
                     webhook.addEmbed(new DiscordWebHookSystem.EmbedObject()
-                            .setTitle("Pokemon Captured by: " + e.getPlayer().getName().getString())
+                            .setTitle(CobbleConfig.webhookEmbedTitle.get() + e.getPlayer().getName().getString())
                             .setColor(Color.WHITE)
                             .addField("Captured Pokemon: ", e.getPokemon().getDisplayName().getString(), true)
                             .addField("Ball Used: ", e.getPokemon().getCaughtBall().getName().getPath(), true)
@@ -94,9 +98,11 @@ public class Cobblemonbroadcast {
             }
 
             if (e.getPokemon().isUltraBeast() &&  CobbleConfig.isUltraBeastEnable.get() && !e.getPokemon().getShiny()) {
-                MutableComponent comp1 = e.getPlayer().getName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.BLUE));
-                MutableComponent comp2 = e.getPokemon().getDisplayName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW));
-                Component ub = Component.translatable("cobblemonbroadcast.captured.ub", comp1, comp2);
+                MutableComponent comp1 = e.getPlayer().getName().plainCopy();
+                MutableComponent comp2 = e.getPokemon().getDisplayName().plainCopy();
+                Component ub = Component.literal( ChatFormatting.BLUE + comp1.getString() + ChatFormatting.WHITE + CobbleConfig.UltraBeastMessage.get() + ChatFormatting.YELLOW + comp2.getString());
+
+
                 for (ServerPlayer player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
                     player.sendSystemMessage(ub);
                 }
@@ -106,7 +112,7 @@ public class Cobblemonbroadcast {
                     webhook.setUsername(CobbleConfig.webhookName.get());
                     webhook.setTts(false);
                     webhook.addEmbed(new DiscordWebHookSystem.EmbedObject()
-                            .setTitle("Pokemon Captured by: " + e.getPlayer().getName().getString())
+                            .setTitle(CobbleConfig.webhookEmbedTitle.get() + e.getPlayer().getName().getString())
                             .setColor(Color.WHITE)
                             .addField("Captured Pokemon: ", e.getPokemon().getDisplayName().getString(), true)
                             .addField("Ball Used: ", e.getPokemon().getCaughtBall().getName().getPath(), true)
@@ -121,9 +127,10 @@ public class Cobblemonbroadcast {
             }
 
             if (e.getPokemon().getShiny() && CobbleConfig.isShinyEnable.get()) {
-                MutableComponent comp1 = e.getPlayer().getName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.BLUE));
-                MutableComponent comp2 = e.getPokemon().getDisplayName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.GOLD));
-                Component shiny = Component.translatable("cobblemonbroadcast.captured.shiny", comp1, comp2);
+                MutableComponent comp1 = e.getPlayer().getName().plainCopy();
+                MutableComponent comp2 = e.getPokemon().getDisplayName();
+                Component shiny = Component.literal( ChatFormatting.BLUE + comp1.getString() + ChatFormatting.WHITE + CobbleConfig.ShinyMessage.get() + ChatFormatting.GOLD + comp2.getString());
+
 
                 for (ServerPlayer player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()){
                     player.sendSystemMessage(shiny);
@@ -134,7 +141,7 @@ public class Cobblemonbroadcast {
                     webhook.setUsername(CobbleConfig.webhookName.get());
                     webhook.setTts(false);
                     webhook.addEmbed(new DiscordWebHookSystem.EmbedObject()
-                            .setTitle("Pokemon Captured by: " + e.getPlayer().getName().getString())
+                            .setTitle(CobbleConfig.webhookEmbedTitle.get() + e.getPlayer().getName().getString())
                             .setColor(Color.WHITE)
                             .addField("Captured Pokemon: ", e.getPokemon().getDisplayName().getString(), true)
                             .addField("Ball Used: ", e.getPokemon().getCaughtBall().getName().getPath(), true)
@@ -145,15 +152,13 @@ public class Cobblemonbroadcast {
                         throw new RuntimeException(ex);
                     }
                 }
-
-
             }
-
+            
             if (!e.getPokemon().isUltraBeast() && !e.getPokemon().getShiny() && !e.getPokemon().isLegendary() && CobbleConfig.isNormalEnable.get()) {
 
-                MutableComponent comp1 = e.getPlayer().getName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.BLUE));
-                MutableComponent comp2 = e.getPokemon().getDisplayName().plainCopy().setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_AQUA));
-                Component normal = Component.translatable("cobblemonbroadcast.captured.normal", comp1, comp2);
+                MutableComponent comp1 = e.getPlayer().getName().plainCopy();
+                MutableComponent comp2 = e.getPokemon().getDisplayName().plainCopy();
+                Component normal = Component.literal( ChatFormatting.BLUE + comp1.getString() + ChatFormatting.WHITE + CobbleConfig.NormalLMessage.get() + ChatFormatting.DARK_AQUA + comp2.getString());
 
                 for (ServerPlayer player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()){
                     player.sendSystemMessage(normal);
@@ -161,10 +166,10 @@ public class Cobblemonbroadcast {
 
                 if (CobbleConfig.discordHook.get()) {
                     webhook.setAvatarUrl("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + e.getPokemon().getSpecies().getNationalPokedexNumber() + ".png");
-                    webhook.setUsername("Cobble BroadCaster");
+                    webhook.setUsername(CobbleConfig.webhookName.get());
                     webhook.setTts(false);
                     webhook.addEmbed(new DiscordWebHookSystem.EmbedObject()
-                            .setTitle("Pokemon Captured by:" + e.getPlayer().getName().getString())
+                            .setTitle(CobbleConfig.webhookEmbedTitle.get() + e.getPlayer().getName().getString())
                             .setColor(Color.WHITE)
                             .addField("Captured Pokemon", e.getPokemon().getDisplayName().getString(), true)
                             .addField("Ball Used:", e.getPokemon().getCaughtBall().getName().getPath(), true)
