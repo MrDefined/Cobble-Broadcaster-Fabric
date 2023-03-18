@@ -22,6 +22,11 @@ description = '''
 A mod that can be use to Broadcast Cobblemon Capture event for Legendarys Ultra Beasts Shinys and Normal All can be toggle on or off
 '''
 [[dependencies.cobblemonbroadcast]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.19.2]"
+
+[[dependencies.cobblemonbroadcast]]
 modId = "cobblemon" #mandatory
 mandatory = true #mandatory
 versionRange = "[1.2.0,)" #mandatory
@@ -30,11 +35,6 @@ versionRange = "[1.2.0,)" #mandatory
 modId="forge" #mandatory
 mandatory=true #mandatory
 versionRange="[40,)" #mandatory
-
-[[dependencies.cobblemonbroadcast]]
-modId="architectury"
-mandatory=true
-versionRange="[6.0.37,)"
 
 [[dependencies.cobblemonbroadcast]]
 modId="architectury"
