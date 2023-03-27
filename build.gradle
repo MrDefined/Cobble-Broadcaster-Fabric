@@ -10,7 +10,7 @@ plugins {
 
 
 group = 'ca.skynetcloud'
-version = '1.4.19045'
+version = '1.5.19045'
 
 java {
     archivesBaseName = 'Cobblemon-Broadcast'
@@ -112,10 +112,12 @@ dependencies {
 
     minecraft 'net.minecraftforge:forge:1.19.2-43.2.4'
 
-    compileOnly 'curse.maven:cobblemon-687131:4443261'
+    compileOnly('curse.maven:cobblemon-687131:4443261')
+
+    compileOnly('curse.maven:architectury-419699:4384406')
 
     // Adds KFF as dependency and Kotlin libs
-    implementation 'thedarkcolour:kotlinforforge:3.10.0'
+    implementation('thedarkcolour:kotlinforforge:3.10.0')
 
 }
 
@@ -146,9 +148,9 @@ modrinth {
     uploadFile = jar // With Loom, this MUST be set to `remapJar` instead of `jar`!
     gameVersions = ["1.19.2"] // Must be an array, even with only one version
     loaders = ["forge"] // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
-    dependencies { // A special DSL for creating dependencies
-
+    dependencies {
         required.project "cobblemon"
+        required.project "kotlin-for-forge"
     }
 }
 

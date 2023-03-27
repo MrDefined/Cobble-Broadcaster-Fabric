@@ -1,6 +1,7 @@
-# Version - 1.4.19045:
-  Sky:
-   - Cobblemon-Broadcaster now depends on Kotlin for Forge
-   - Messages are now configurable in the config file.
+# Version - 1.5.19045:
+ # Sky:
+   - Fixed Shiny Sprite being just a normal sprite it now should show the right shiny sprite
+   - Fixed Ball Name to be local name of the item
+   
 
  
