@@ -6,6 +6,8 @@ import ca.skynetcloud.cobblemonbroadcast.util.Text;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
+import com.cobblemon.mod.common.api.pokemon.stats.Stats;
+import com.cobblemon.mod.common.util.LocalizationUtilsKt;
 import com.mojang.logging.LogUtils;
 import dev.architectury.event.events.common.PlayerEvent;
 import kotlin.Unit;
@@ -29,6 +31,7 @@ import org.slf4j.Logger;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.UUID;
 
 import static ca.skynetcloud.cobblemonbroadcast.util.CobbleConfig.endCode;
@@ -41,7 +44,7 @@ public class Cobblemonbroadcast {
 
     public static final String MODNAME = "Cobblemon-Broadcaster";
 
-    public static final String MODVERSION = "1.5.19045";
+    public static final String MODVERSION = "1.6.19045";
     
     public static final String DEVNAME = "SkyNetCloud";
 
@@ -67,6 +70,14 @@ public class Cobblemonbroadcast {
     }
     
     private void CaputerStuff() {
+        Random rand = new Random();
+        float r = rand.nextFloat();
+        float g = rand.nextFloat() / 2f;
+        float b = rand.nextFloat() / 2f;
+        Color randColor = new Color(r,g,b);
+
+
+
         DiscordWebhook webhook = new DiscordWebhook("https://discord.com/api/webhooks/" + endCode.get());
         CobblemonEvents.POKEMON_CAPTURED.subscribe(Priority.NORMAL, e -> {
             if (e.getPokemon().isLegendary() && CobbleConfig.isLegendaryEnable.get() && !e.getPokemon().getShiny())  {
@@ -74,14 +85,26 @@ public class Cobblemonbroadcast {
                 MutableComponent comp2 = e.getPokemon().getDisplayName().plainCopy();
                 Component legend = Component.literal( ChatFormatting.BLUE + comp1.getString() + ChatFormatting.WHITE + CobbleConfig.LegendaryMessage.get() + ChatFormatting.GREEN + comp2.getString());
                 if (CobbleConfig.discordHook.get()){
-                    webhook.setAvatarUrl("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png");
+                    webhook.setAvatarUrl(CobbleConfig.setAvatarUrl.get());
                     webhook.setUsername(CobbleConfig.webhookName.get());
                     webhook.setTts(false);
                     webhook.addEmbed(new DiscordWebhook.EmbedObject()
-                            .setTitle(CobbleConfig.webhookEmbedTitle.get() + e.getPlayer().getName().getString())
-                            .setColor(Color.WHITE)
-                            .addField("Captured Pokemon: ", e.getPokemon().getDisplayName().getString(), false)
-                            .addField("Ball Used: ", Text.capitalizeWord(e.getPokemon().getCaughtBall().getName().getPath().replace("_", " ")), false)
+                            .setColor(randColor)
+                            .setAuthor("Pokemon Captured: " + e.getPokemon().getSpecies().getName(),"","https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png")
+                            .addField("Player Name: " + e.getPlayer().getName().getString(), "", false)
+                            .addField("Nature: " + Text.capitalizeWord(e.getPokemon().getNature().getName().getPath().replace("_", " ")), "", false)
+                            .addField("Ability: " + LocalizationUtilsKt.lang(Text.capitalize(e.getPokemon().getAbility().getName())).getString().replace("cobblemon.", " "), "", false)
+                            .addField("Ball Used: " + Text.capitalizeWord(e.getPokemon().getCaughtBall().getName().getPath().replace("_", " ")), "", false)
+
+                            .addField("Ivs: " + "(" + String.format("%.2f", e.getPokemon().getIvs().getOrDefault(Stats.HP) + e.getPokemon().getIvs().getOrDefault(Stats.ATTACK) + e.getPokemon().getIvs().getOrDefault(Stats.DEFENCE) + e.getPokemon().getIvs().getOrDefault(Stats.SPECIAL_ATTACK) + e.getPokemon().getIvs().getOrDefault(Stats.SPECIAL_DEFENCE) + e.getPokemon().getIvs().getOrDefault(Stats.SPEED)  * 100.0D / 510.0D).toString() + ")", "", false)
+                            .addField("Hp", e.getPokemon().getIvs().get(Stats.HP).toString(), true)
+                            .addField("Atk", e.getPokemon().getIvs().get(Stats.ATTACK).toString(), true)
+                            .addField("Def", e.getPokemon().getIvs().get(Stats.DEFENCE).toString(), true)
+
+                            .addField("SpA", e.getPokemon().getIvs().get(Stats.SPECIAL_ATTACK).toString(), true)
+                            .addField("SpD", e.getPokemon().getIvs().get(Stats.SPECIAL_DEFENCE).toString(), true)
+                            .addField("Spe", e.getPokemon().getIvs().get(Stats.SPEED).toString(), true)
+
                             .setThumbnail("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + e.getPokemon().getSpecies().getNationalPokedexNumber() + ".png"));
                     try {
                         webhook.execute();
@@ -104,14 +127,26 @@ public class Cobblemonbroadcast {
                 }
 
                 if (CobbleConfig.discordHook.get()) {
-                    webhook.setAvatarUrl("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png");
+                    webhook.setAvatarUrl(CobbleConfig.setAvatarUrl.get());
                     webhook.setUsername(CobbleConfig.webhookName.get());
                     webhook.setTts(false);
                     webhook.addEmbed(new DiscordWebhook.EmbedObject()
-                            .setTitle(CobbleConfig.webhookEmbedTitle.get() + e.getPlayer().getName().getString())
-                            .setColor(Color.WHITE)
-                            .addField("Captured Pokemon: ", e.getPokemon().getDisplayName().getString(), true)
-                            .addField("Ball Used: ",  Text.capitalizeWord(e.getPokemon().getCaughtBall().getName().getPath().replace("_", " ")), true)
+                            .setColor(randColor)
+                            .setAuthor("Pokemon Captured: " + e.getPokemon().getSpecies().getName(),"","https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png")
+                            .addField("Player Name: " + e.getPlayer().getName().getString(), "", false)
+                            .addField("Nature: " + Text.capitalizeWord(e.getPokemon().getNature().getName().getPath().replace("_", " ")), "", false)
+                            .addField("Ability: " + LocalizationUtilsKt.lang(Text.capitalize(e.getPokemon().getAbility().getName())).getString().replace("cobblemon.", " "), "", false)
+                            .addField("Ball Used: " + Text.capitalizeWord(e.getPokemon().getCaughtBall().getName().getPath().replace("_", " ")), "", false)
+
+                            .addField("Ivs: " + "(" + String.format("%.2f", e.getPokemon().getIvs().getOrDefault(Stats.HP) + e.getPokemon().getIvs().getOrDefault(Stats.ATTACK) + e.getPokemon().getIvs().getOrDefault(Stats.DEFENCE) + e.getPokemon().getIvs().getOrDefault(Stats.SPECIAL_ATTACK) + e.getPokemon().getIvs().getOrDefault(Stats.SPECIAL_DEFENCE) + e.getPokemon().getIvs().getOrDefault(Stats.SPEED)  * 100.0D / 510.0D).toString() + ")", "", false)
+                            .addField("Hp", e.getPokemon().getIvs().get(Stats.HP).toString(), true)
+                            .addField("Atk", e.getPokemon().getIvs().get(Stats.ATTACK).toString(), true)
+                            .addField("Def", e.getPokemon().getIvs().get(Stats.DEFENCE).toString(), true)
+
+                            .addField("SpA", e.getPokemon().getIvs().get(Stats.SPECIAL_ATTACK).toString(), true)
+                            .addField("SpD", e.getPokemon().getIvs().get(Stats.SPECIAL_DEFENCE).toString(), true)
+                            .addField("Spe", e.getPokemon().getIvs().get(Stats.SPEED).toString(), true)
+
                             .setThumbnail("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + e.getPokemon().getSpecies().getNationalPokedexNumber() + ".png"));
                     try {
                         webhook.execute();
@@ -133,14 +168,26 @@ public class Cobblemonbroadcast {
                 }
 
                 if (CobbleConfig.discordHook.get()) {
-                    webhook.setAvatarUrl("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png");
+                    webhook.setAvatarUrl(CobbleConfig.setAvatarUrl.get());
                     webhook.setUsername(CobbleConfig.webhookName.get());
                     webhook.setTts(false);
                     webhook.addEmbed(new DiscordWebhook.EmbedObject()
-                            .setTitle(CobbleConfig.webhookEmbedTitle.get() + e.getPlayer().getName().getString())
-                            .setColor(Color.WHITE)
-                            .addField("Captured Pokemon: ", e.getPokemon().getDisplayName().getString(), true)
-                            .addField("Ball Used: ",  Text.capitalizeWord(e.getPokemon().getCaughtBall().getName().getPath().replace("_", " ")), true)
+                            .setColor(randColor)
+                            .setAuthor("Pokemon Captured: " + e.getPokemon().getSpecies().getName(),"","https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png")
+                            .addField("Player Name: " + e.getPlayer().getName().getString(), "", false)
+                            .addField("Nature: " + Text.capitalizeWord(e.getPokemon().getNature().getName().getPath().replace("_", " ")), "", false)
+                            .addField("Ability: " + LocalizationUtilsKt.lang(Text.capitalize(e.getPokemon().getAbility().getName())).getString().replace("cobblemon.", " "), "", false)
+                            .addField("Ball Used: " + Text.capitalizeWord(e.getPokemon().getCaughtBall().getName().getPath().replace("_", " ")), "", false)
+
+                            .addField("Ivs:", "("+ String.format("%.2f", e.getPokemon().getIvs().getOrDefault(Stats.HP) + e.getPokemon().getIvs().getOrDefault(Stats.ATTACK) + e.getPokemon().getIvs().getOrDefault(Stats.DEFENCE) + e.getPokemon().getIvs().getOrDefault(Stats.SPECIAL_ATTACK) + e.getPokemon().getIvs().getOrDefault(Stats.SPECIAL_DEFENCE) + e.getPokemon().getIvs().getOrDefault(Stats.SPEED)  * 100.0D / 510.0D).toString() + ")", false)
+                            .addField("Hp", e.getPokemon().getIvs().get(Stats.HP).toString(), true)
+                            .addField("Atk", e.getPokemon().getIvs().get(Stats.ATTACK).toString(), true)
+                            .addField("Def", e.getPokemon().getIvs().get(Stats.DEFENCE).toString(), true)
+
+                            .addField("SpA", e.getPokemon().getIvs().get(Stats.SPECIAL_ATTACK).toString(), true)
+                            .addField("SpD", e.getPokemon().getIvs().get(Stats.SPECIAL_DEFENCE).toString(), true)
+                            .addField("Spe", e.getPokemon().getIvs().get(Stats.SPEED).toString(), true)
+
                             .setThumbnail("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/" + e.getPokemon().getSpecies().getNationalPokedexNumber() + ".png"));
                     try {
                         webhook.execute();
@@ -161,14 +208,26 @@ public class Cobblemonbroadcast {
                 }
 
                 if (CobbleConfig.discordHook.get()) {
-                    webhook.setAvatarUrl("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + e.getPokemon().getSpecies().getNationalPokedexNumber() + ".png");
+                    webhook.setAvatarUrl(CobbleConfig.setAvatarUrl.get());
                     webhook.setUsername(CobbleConfig.webhookName.get());
                     webhook.setTts(false);
                     webhook.addEmbed(new DiscordWebhook.EmbedObject()
-                            .setTitle(CobbleConfig.webhookEmbedTitle.get() + e.getPlayer().getName().getString())
-                            .setColor(Color.WHITE)
-                            .addField("Captured Pokemon", e.getPokemon().getDisplayName().getString(), true)
-                            .addField("Ball Used:",  Text.capitalizeWord(e.getPokemon().getCaughtBall().getName().getPath().replace("_", " ")), true)
+                            .setColor(randColor)
+                            .setAuthor("Pokemon Captured: " + e.getPokemon().getSpecies().getName(),"","https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+ e.getPokemon().getCaughtBall().getName().getPath() +".png")
+                            .addField("Player Name: " + e.getPlayer().getName().getString(), "", false)
+                            .addField("Nature: " + Text.capitalizeWord(e.getPokemon().getNature().getName().getPath().replace("_", " ")), "", false)
+                            .addField("Ability: " + LocalizationUtilsKt.lang(Text.capitalize(e.getPokemon().getAbility().getName())).getString().replace("cobblemon.", " "), "", false)
+                            .addField("Ball Used: " + Text.capitalizeWord(e.getPokemon().getCaughtBall().getName().getPath().replace("_", " ")), "", false)
+
+                            .addField("Ivs:", "("+ String.format("%.2f", e.getPokemon().getIvs().getOrDefault(Stats.HP) + e.getPokemon().getIvs().getOrDefault(Stats.ATTACK) + e.getPokemon().getIvs().getOrDefault(Stats.DEFENCE) + e.getPokemon().getIvs().getOrDefault(Stats.SPECIAL_ATTACK) + e.getPokemon().getIvs().getOrDefault(Stats.SPECIAL_DEFENCE) + e.getPokemon().getIvs().getOrDefault(Stats.SPEED)  * 100.0D / 510.0D).toString() + ")", false)
+                            .addField("Hp", e.getPokemon().getIvs().get(Stats.HP).toString(), true)
+                            .addField("Atk", e.getPokemon().getIvs().get(Stats.ATTACK).toString(), true)
+                            .addField("Def", e.getPokemon().getIvs().get(Stats.DEFENCE).toString(), true)
+
+                            .addField("SpA", e.getPokemon().getIvs().get(Stats.SPECIAL_ATTACK).toString(), true)
+                            .addField("SpD", e.getPokemon().getIvs().get(Stats.SPECIAL_DEFENCE).toString(), true)
+                            .addField("Spe", e.getPokemon().getIvs().get(Stats.SPEED).toString(), true)
+
                             .setThumbnail("https://raw.githubusercontent.com/SkyNetCloud/pokesprite/master/items/ball/"+e.getPokemon().getCaughtBall().getName().toString().trim()+".png"));
                     try {
                         webhook.execute();

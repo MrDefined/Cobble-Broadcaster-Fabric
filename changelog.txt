@@ -1,6 +1,9 @@
-Version - 1.5.19045:
+Version - 1.6.19045:
   Sky:
-   - Fixed Shiny Sprite being just a normal sprite it now should show the right shiny sprite
-   - Fixed Ball Name to be local name of the item
+   - Added Nature & Ability to Embed (Thank to Frosteffects for a very good suggestion)
+   - Added Ivs Stats and Totals Ivs % to the Embed
+   - Added Embed are now random color each time
+   - setAvatarUrl is now editable in config file
+
 
  

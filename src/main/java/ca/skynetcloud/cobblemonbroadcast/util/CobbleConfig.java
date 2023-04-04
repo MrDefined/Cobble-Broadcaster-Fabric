@@ -24,6 +24,8 @@ public class CobbleConfig {
     public static ConfigValue<String> UltraBeastMessage;
     public static ConfigValue<String> ShinyMessage;
     public static ConfigValue<String> NormalLMessage;
+
+    public static ConfigValue<String> setAvatarUrl;
     static {
 
         builder.push("Broadcast Settings");
@@ -42,6 +44,10 @@ public class CobbleConfig {
         discordHook = builder.comment("Enable or disable DiscordWebhook support").translation("discordhook").define("discordhook", false);
         endCode = builder.comment("Webhook End code of url").translation("endcode").define("endcode", "End Part of Webhook URL");
         webhookName = builder.comment("Webhook name").translation("webhookname").define("webhookname", "Cobble-Broadcaster");
+
+
+        setAvatarUrl = builder.comment("Webhook Avatar Url").translation("avatarurl").define("avatarurl", "");
+
 
         webhookEmbedTitle = builder.comment("Webhook Embed Title").translation("webhookembedtitle").define("webhookembedtitle", "Pokemon Captured by: ");
         builder.pop();

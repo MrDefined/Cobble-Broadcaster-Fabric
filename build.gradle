@@ -10,7 +10,7 @@ plugins {
 
 
 group = 'ca.skynetcloud'
-version = '1.5.19045'
+version = '1.6.19045'
 
 java {
     archivesBaseName = 'Cobblemon-Broadcast'
